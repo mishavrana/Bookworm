@@ -9,36 +9,62 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
-    /*
-     It is the fetch request for Studen entities
-     As a 'sortDescrition' parameter we give an enmpry array - means without sorting
-     */
-    @FetchRequest(sortDescriptors: []) var students: FetchedResults<Student>
     
+    // It is showing all saved books and updates the UI
+    @FetchRequest(sortDescriptors: [
+        SortDescriptor(\.title),
+        SortDescriptor(\.author)
+    ]) var books: FetchedResults<Book>
+    
+    @State private var showingAddScreen = false
     var body: some View {
-        VStack {
-            VStack {
-                List(students) { student in
-                    // Have to do neal coalescing everywhere
-                    Text(student.name ?? "Unknown" )
+        NavigationView {
+            
+            List {
+                ForEach(books) { book in
+                    NavigationLink {
+                        DetailView(book: book)
+                    } label: {
+                        HStack {
+                            EmojiRaitingView(raiting: book.raiting)
+                                .font(.largeTitle)
+                            VStack(alignment: .leading) {
+                                Text(book.title ?? "Unknown Title")
+                                    .font(.headline)
+                                Text(book.author ?? "Unknown Author")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+                .onDelete(perform: deleteBooks)
+            }
+            .navigationTitle("Bookworm")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
                 }
                 
-                Button("Add") {
-                    let firstNames = ["Ginny", "Harry", "Hermione", "Luna", "Ron"]
-                    let lastNames = ["Granger", "Lovegood", "Potter","Weaslev"]
-                    
-                    let chosenFirstName = firstNames.randomElement()!
-                    let chosenLastName = lastNames.randomElement()!
-                    
-                    let student = Student(context: moc)
-                    student.id = UUID()
-                    student.name = "\(chosenFirstName) \(chosenLastName)"
-                    
-                    try? moc.save()
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingAddScreen.toggle()
+                    } label: {
+                        Label("Add book", systemImage: "plus")
+                    }
                 }
             }
+            .sheet(isPresented: $showingAddScreen) {
+                AddBookView()
+            }
+            
         }
-        .padding()
+    }
+    func deleteBooks(at offsets: IndexSet) {
+        for offset in offsets {
+            let book = books[offset]
+            moc.delete(book)
+        }
+        //try? moc.save()
     }
 }
 
