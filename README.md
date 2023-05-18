@@ -23,6 +23,8 @@ The app uses custom views to set the raiting.
     <li>CoreData</li>
 </ul>
 
+## Interface
+
 | List of the books | View to add books | Detailed information
 |:-------------:|:-----------------:|:-----------------:|
-| <img src="/Assets/List_of_books.png" alt="Pomodoro main screen" title="Pomodoro main screen" style="display: inline-block; margin: 0 auto; max-width: 300px"> | <img src="/Assets/Detailed_information.png" alt="Pomodoro settings screen" title="Pomodoro settings screen" style="display: inline-block; margin: 0 auto; max-width: 300px"> | <img src="/Assets/ Add_book.png" alt="Pomodoro settings screen" title="Pomodoro settings screen" style="display: inline-block; margin: 0 auto; max-width: 300px">
+| <img src="/Assets/List_of_books.png" alt="Bookworm main screen" title="Bookworm main screen" style="display: inline-block; margin: 0 auto; max-width: 300px"> | <img src="/Assets/Detailed_information.png" alt="Detailed information" title="Detailed information" style="display: inline-block; margin: 0 auto; max-width: 300px"> | <img src="/Assets/ Add_book.png" alt="Add book" title="Add book" style="display: inline-block; margin: 0 auto; max-width: 300px">
