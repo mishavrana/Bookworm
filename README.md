@@ -1,4 +1,4 @@
-# Pomodoro app
+# Bookworm app
 
 ## Description
 
